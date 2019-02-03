@@ -1,0 +1,31 @@
+import { InitialData, expectedData } from './data';
+
+function* normalize (dataObj) {
+
+    function reduce(key, obj) {
+        return {[key]: obj[key].value}
+    }
+    
+    function mapArr(array) {
+        return array.map(el=>workKeyValue(el))
+    }
+
+    function workKeyValue (obj) {
+        let resultedObj = {};
+        for (let key in obj) {
+            resultedObj = {...resultedObj, ...reduce(key, obj)}
+        }
+        return resultedObj;
+    }
+
+    for (let key in dataObj) {
+        if ( Array.isArray(dataObj[key].value ) ) { yield {[key]: mapArr(dataObj[key].value)} } 
+        else { yield reduce(key, dataObj); }
+    }
+}
+
+let result = {};
+for (let elem of normalize(InitialData)) {
+    result = { ...result, ...elem };
+}
+
