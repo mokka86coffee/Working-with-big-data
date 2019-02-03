@@ -29,3 +29,4 @@ for (let elem of normalize(InitialData)) {
     result = { ...result, ...elem };
 }
 
+console.log(JSON.stringify(expectedData) === JSON.stringify(result));
