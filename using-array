@@ -1,0 +1,19 @@
+import { InitialData, expectedData } from './data';
+function reduce(array) {
+    return array.map(el=>
+        Object
+            .entries(el)
+            .reduce((res,elem)=>({...res, [elem[0]]: elem[1].value}), {})
+    )
+}
+let result = Object
+    .entries(InitialData)
+    .reduce((res,el)=> {
+        if ( el[1].value instanceof Array ) { 
+            return {...res, [el[0]]: reduce(el[1].value)}
+        } else {
+            return {...res, [el[0]]: el[1].value}
+        }
+    }, {}); 
+    
+console.log(JSON.stringify(expectedData) === JSON.stringify(result));
